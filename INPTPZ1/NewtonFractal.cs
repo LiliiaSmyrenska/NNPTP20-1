@@ -7,10 +7,10 @@ namespace INPTPZ1
 {
     class NewtonFractal
     {
-        private const double NEWNUMBERZERO = 0.0001;
+        private const double NUMBER_ZERO = 0.0001;
         private static Bitmap bitmap;
         private static double xMinimum, xMaximum, yMinimum, yMaximum, xStep, yStep;
-        private static Polynom polynoms, polinomDerive;
+        private static Polynomial polynoms, polinomDerive;
         private static string path;
 
 
@@ -29,7 +29,7 @@ namespace INPTPZ1
             {
                 Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange, Color.Fuchsia, Color.Gold, Color.Cyan, Color.Magenta
             };
-            List<ComplexNumber> roots = Polynoms();
+            List<ComplexNumberCalculate> roots = Polynoms();
             Console.WriteLine(polynoms);
             Console.WriteLine(polinomDerive);
             var maxId = 0;
@@ -37,24 +37,23 @@ namespace INPTPZ1
             {
                 for (int j = 0; j < int.Parse(args[1]); j++)
                 {
-                    ComplexNumber complexNumber = ComplexNumber(i, j);
-                    float iteration = Iteration(ref complexNumber);
-                    int id = RootNumbers(roots, ref maxId, complexNumber);
+                    ComplexNumberCalculate complexNumber = ComplexNumber(i, j);
+                    float iteration = IterateComplexNumber(ref complexNumber);
+                    int id = FindRootNumbers(roots, ref maxId, complexNumber);
                     ChoiceColors(colors, i, j, iteration, id);
                 }
             }
             bitmap.Save(path ?? "../../../out.png");
         }
 
-        private static void ChoiceColors(Color[] colors, int i, int j, float iteration, int id)
+        private static void ChoiceColors(Color[] colors, int i, int j, float iteration, int colorCode)
         {
-            var color = colors[id % colors.Length];
-            color = Color.FromArgb(color.R, color.G, color.B);
+            var color = colors[colorCode % colors.Length];
             color = Color.FromArgb(Math.Min(Math.Max(0, color.R - (int)iteration * 2), 255), Math.Min(Math.Max(0, color.G - (int)iteration * 2), 255), Math.Min(Math.Max(0, color.B - (int)iteration * 2), 255));
             bitmap.SetPixel(j, i, color);
         }
 
-        private static int RootNumbers(List<ComplexNumber> roots, ref int maxId, ComplexNumber complexNumber)
+        private static int FindRootNumbers(List<ComplexNumberCalculate> roots, ref int maxId, ComplexNumberCalculate complexNumber)
         {
             var known = false;
             var id = 0;
@@ -76,7 +75,7 @@ namespace INPTPZ1
             return id;
         }
 
-        private static float Iteration(ref ComplexNumber complexNumber)
+        private static float IterateComplexNumber(ref ComplexNumberCalculate complexNumber)
         {
             float iteration = 0;
             for (int i = 0; i < 30; i++)
@@ -94,32 +93,32 @@ namespace INPTPZ1
             return iteration;
         }
 
-        private static ComplexNumber ComplexNumber(int width, int height)
+        private static ComplexNumberCalculate ComplexNumber(int width, int height)
         {
             double newNumberImaginary = yMinimum + width * yStep;
             double newNumberReal = xMinimum + height * xStep;
 
-            ComplexNumber complexNumber = new ComplexNumber()
+            ComplexNumberCalculate complexNumber = new ComplexNumberCalculate()
             {
                 RealPart = newNumberReal,
                 ImaginaryPart = newNumberImaginary
             };
 
             if (complexNumber.RealPart == 0)
-                complexNumber.RealPart = NEWNUMBERZERO;
+                complexNumber.RealPart = NUMBER_ZERO;
             if (complexNumber.ImaginaryPart == 0)
-                complexNumber.ImaginaryPart = NEWNUMBERZERO;
+                complexNumber.ImaginaryPart = NUMBER_ZERO;
             return complexNumber;
         }
 
-        private static List<ComplexNumber> Polynoms()
+        private static List<ComplexNumberCalculate> Polynoms()
         {
-            List<ComplexNumber> roots = new List<ComplexNumber>();
-            polynoms = new Polynom();
-            polynoms.ComplexNumberList.Add(new ComplexNumber() { RealPart = 1 });
-            polynoms.ComplexNumberList.Add(Mathematics.ComplexNumber.ComplexNumberZero);
-            polynoms.ComplexNumberList.Add(Mathematics.ComplexNumber.ComplexNumberZero);
-            polynoms.ComplexNumberList.Add(new ComplexNumber() { RealPart = 1 });
+            List<ComplexNumberCalculate> roots = new List<ComplexNumberCalculate>();
+            polynoms = new Polynomial();
+            polynoms.ComplexNumberList.Add(new ComplexNumberCalculate() { RealPart = 1 });
+            polynoms.ComplexNumberList.Add(Mathematics.ComplexNumberCalculate.ComplexNumberZero);
+            polynoms.ComplexNumberList.Add(Mathematics.ComplexNumberCalculate.ComplexNumberZero);
+            polynoms.ComplexNumberList.Add(new ComplexNumberCalculate() { RealPart = 1 });
             polinomDerive = polynoms.Derive();
             return roots;
         }

@@ -4,30 +4,30 @@ namespace INPTPZ1
 
     namespace Mathematics
     {
-        class Polynom
+        class Polynomial
         {
-            public List<ComplexNumber> ComplexNumberList { get; set; }
+            public List<ComplexNumberCalculate> ComplexNumberList { get; set; }
 
-            public Polynom() => ComplexNumberList = new List<ComplexNumber>();
+            public Polynomial() => ComplexNumberList = new List<ComplexNumberCalculate>();
 
-            public Polynom Derive()
+            public Polynomial Derive()
             {
-                Polynom newPolynom = new Polynom();
+                Polynomial newPolynom = new Polynomial();
                 for (int i = 1; i < ComplexNumberList.Count; i++)
                 {
-                    newPolynom.ComplexNumberList.Add(ComplexNumberList[i].Multiply(new ComplexNumber() { RealPart = i }));
+                    newPolynom.ComplexNumberList.Add(ComplexNumberList[i].Multiply(new ComplexNumberCalculate() { RealPart = i }));
                 }
 
                 return newPolynom;
             }
 
-            public ComplexNumber Eval(ComplexNumber newNumber)
+            public ComplexNumberCalculate Eval(ComplexNumberCalculate newNumber)
             {
-                ComplexNumber number = ComplexNumber.ComplexNumberZero;
+                ComplexNumberCalculate number = ComplexNumberCalculate.ComplexNumberZero;
                 for (int i = 0; i < ComplexNumberList.Count; i++)
                 {
-                    ComplexNumber PolynomialСoefficient = ComplexNumberList[i];
-                    ComplexNumber multiplication = newNumber;
+                    ComplexNumberCalculate PolynomialСoefficient = ComplexNumberList[i];
+                    ComplexNumberCalculate multiplication = newNumber;
                     int power = i;
 
                     if (i > 0)

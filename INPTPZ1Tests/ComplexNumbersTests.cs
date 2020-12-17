@@ -9,19 +9,19 @@ namespace INPTPZ1.Mathematics.Tests
         [TestMethod()]
         public void AddTest()
         {
-            ComplexNumber a = new ComplexNumber()
+            ComplexNumberCalculate a = new ComplexNumberCalculate()
             {
                 RealPart = 10,
                 ImaginaryPart = 20
             };
-            ComplexNumber b = new ComplexNumber()
+            ComplexNumberCalculate b = new ComplexNumberCalculate()
             {
                 RealPart = 1,
                 ImaginaryPart = 2
             };
 
-            ComplexNumber actual = a.Add(b);
-            ComplexNumber shouldBe = new ComplexNumber()
+            ComplexNumberCalculate actual = a.Add(b);
+            ComplexNumberCalculate shouldBe = new ComplexNumberCalculate()
             {
                 RealPart = 11,
                 ImaginaryPart = 22
